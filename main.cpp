@@ -1,57 +1,27 @@
 #include <iostream>
-#include <cmath>
-#include <string>
+#include <bitset>
 
 using namespace std;
+main() {
+    int x;
+    int count = 0;
+    int triplets = 0;
 
-int main() {
-    string continueRunning;
-    do {
-        string nS, kS;
-        int n, k;
+    cout << "Enter a number: ";
+    cin >> x;
+    cout << "Binary representation: " << bitset<8*sizeof(x)>(x) << endl;
 
-        try {
-            cout << "Введіть n1 (натуральне число): ";
-            cin >> kS;
-            cout << endl;
-            size_t pos;
-            k = stoi(kS, &pos);
-            if (pos < kS.size()|| k < 1) {throw 1;}
+    for (int i = 0; i <= 32; i++) {
+        if ((x & (1 << i)) != 0) {
+            count++;
+            if (count == 3) {
+                triplets++;
+                count = 0;
+            }
+        } else {
+            count = 0;
         }
-        catch(...) {
-            cout << "Ви ввели некоректне число!";
-            continueRunning = "y";
-            cout << endl;
-            continue;
-        }
-        try {
-            cout << "Введіть n2(натуральне число яке >n1): ";
-            cin >> nS;
-            cout << endl;
-            size_t pos1;
-            n = stoi(nS, &pos1);
-            if (pos1 < nS.size()|| n < k) {throw 1;}
-        }
-        catch(...) {
-            cout << "Ви ввели некоректре число!";
-            cout << endl;
-            continueRunning = "y";
-            continue;
-        }
-
-        long double product = 1.0;
-        for (int i = k; i <= n; i++) {
-            double numer =(1.0 - pow(-1.0, i - 1) / (3 * i - 1));
-            cout << "Числове значення: " << numer << endl;
-            product *= numer;
-        }
-
-        cout << "Значення формули: " << product << endl;
-
-        cout << "Продовжити виконання програми? (y/n): ";
-        cin >> continueRunning;
-        cout << endl;
-    } while (continueRunning == "y" || continueRunning == "Y");
-
+    }
+    cout << "Number of triplets: " << triplets << endl;
     return 0;
 }
