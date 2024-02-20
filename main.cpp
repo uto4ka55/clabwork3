@@ -1,5 +1,4 @@
 #include <iostream>
-#include <iomanip>
 #include <cmath>
 #include <string>
 
@@ -8,11 +7,8 @@ using namespace std;
 int main() {
     string continueRunning;
     do {
-        string nS, kS, epsilonS;
+        string nS, kS;
         int n, k;
-        double epsilon;
-
-        // Введення даних
 
         try {
             cout << "Введіть n1 (натуральне число): ";
@@ -24,39 +20,33 @@ int main() {
         }
         catch(...) {
             cout << "Ви ввели некоректне число!";
-            return 1;
+            continueRunning = "y";
+            cout << endl;
+            continue;
         }
         try {
             cout << "Введіть n2(натуральне число яке >n1): ";
             cin >> nS;
             cout << endl;
-            size_t pos;
-            n = stoi(nS, &pos);
-            if (pos < nS.size()|| n < k) {throw 1;}
+            size_t pos1;
+            n = stoi(nS, &pos1);
+            if (pos1 < nS.size()|| n < k) {throw 1;}
         }
         catch(...) {
             cout << "Ви ввели некоректре число!";
-            return 1;
-        }
-        try {
-            cout << "Введіть точність обчислення (додатне число): ";
-            cin >> epsilonS;
             cout << endl;
-            size_t pos;
-            epsilon = stod(epsilonS, &pos);
-            if (pos < epsilonS.size()|| epsilon <= 0) {throw 1;}
-        }
-        catch(...) {
-            cout << "Ви ввели некоректне число!";
-            return 1;
+            continueRunning = "y";
+            continue;
         }
 
         long double product = 1.0;
         for (int i = k; i <= n; i++) {
-            product *= (1.0 - pow(-1.0, i - 1) / (3 * i - 1));
+            double numer =(1.0 - pow(-1.0, i - 1) / (3 * i - 1));
+            cout << "Числове значення: " << numer << endl;
+            product *= numer;
         }
 
-        cout << fixed << setprecision(epsilon) << "Значення формули: " << product << endl;
+        cout << "Значення формули: " << product << endl;
 
         cout << "Продовжити виконання програми? (y/n): ";
         cin >> continueRunning;
